@@ -25,9 +25,9 @@ fi
 pane_path="$(tmux display-message -p '#{pane_current_path}' 2>/dev/null)" || exit 0
 branch="$(git -C "$pane_path" rev-parse --abbrev-ref HEAD 2>/dev/null)" || exit 0
 
-# --- branch 이름에서 Linear 이슈 ID 추출 ---
-if [[ "$branch" =~ ([A-Z]+-[0-9]+) ]]; then
-  issue_id="${BASH_REMATCH[1]}"
+# --- branch 이름에서 Linear 이슈 ID 추출 (대소문자 모두 허용) ---
+if [[ "$branch" =~ ([A-Za-z]+-[0-9]+) ]]; then
+  issue_id="${BASH_REMATCH[1]^^}"
 else
   exit 0
 fi

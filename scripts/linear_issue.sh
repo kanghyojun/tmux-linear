@@ -15,6 +15,7 @@ MAX_TITLE_LEN="$(get_tmux_option "@linear_max_title_len" "40")"
 CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/tmux-linear"
 
 MODE="${1:-full}"
+PANE_PATH="${2:-}"
 
 # --- API 키 확인 ---
 if [[ -z "$API_KEY" ]]; then
@@ -22,7 +23,8 @@ if [[ -z "$API_KEY" ]]; then
 fi
 
 # --- tmux 현재 pane의 디렉토리에서 git branch 가져오기 ---
-pane_path="$(tmux display-message -p '#{pane_current_path}' 2>/dev/null)" || exit 0
+pane_path="${PANE_PATH:-$(tmux display-message -p '#{pane_current_path}' 2>/dev/null)}"
+[[ -z "$pane_path" ]] && exit 0
 branch="$(git -C "$pane_path" rev-parse --abbrev-ref HEAD 2>/dev/null)" || exit 0
 
 # --- branch 이름에서 Linear 이슈 ID 추출 (대소문자 모두 허용) ---

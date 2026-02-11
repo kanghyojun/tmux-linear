@@ -12,9 +12,9 @@ linear_interpolation=(
 )
 
 linear_commands=(
-  "#($CURRENT_DIR/scripts/linear_issue.sh full)"
-  "#($CURRENT_DIR/scripts/linear_issue.sh id)"
-  "#($CURRENT_DIR/scripts/linear_issue.sh title)"
+  "#($CURRENT_DIR/scripts/linear_issue.sh full #{pane_current_path})"
+  "#($CURRENT_DIR/scripts/linear_issue.sh id #{pane_current_path})"
+  "#($CURRENT_DIR/scripts/linear_issue.sh title #{pane_current_path})"
 )
 
 do_interpolation() {

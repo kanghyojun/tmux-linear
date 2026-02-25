@@ -34,9 +34,22 @@ update_tmux_option() {
   tmux set-option -gq "$option" "$new_value"
 }
 
+update_tmux_status_format_options() {
+  local line
+  local option
+
+  while IFS= read -r line; do
+    option="${line%% *}"
+    if [[ "$option" == status-format\[*\] ]]; then
+      update_tmux_option "$option"
+    fi
+  done < <(tmux show-options -g status-format 2>/dev/null)
+}
+
 main() {
   update_tmux_option "status-right"
   update_tmux_option "status-left"
+  update_tmux_status_format_options
 }
 
 main
